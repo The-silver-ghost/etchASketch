@@ -1,0 +1,61 @@
+const MIN_COUNT = 16, MAX_COUNT = 100;
+count = MIN_COUNT;
+
+//functions
+function inputPrompt(event){
+    if (event.target.id === "gridCountButton"){
+        count = 16;
+        count = prompt("Choose the number of squares in the grid [16-100]",16);
+        count = parseInt(count);
+        if (isNaN(count)){
+            count = 16;
+            alert("Invalid input. Grid count set to 16.");
+        }
+        else if (count < MIN_COUNT || count > MAX_COUNT){
+            count = 16;
+            alert("Invalid grid number. Grid count set to 16.");
+        }
+    }
+    return count;
+}
+
+function addGridToCanvas(event,count){
+    canvas = document.getElementById("canvas");
+    canvas.replaceChildren();
+    gridSquare = document.createElement("div");
+    gridSquare.className = "grid";
+    gridSquare.style.backgroundColor = "rgba(255,255,255,1)";
+    for (i = 0; i < count; i ++){
+        for(j = 0; j < count; j++){
+            canvas.appendChild(gridSquare);
+        }
+    }
+}
+
+function colorCanvas(event){
+    const MAX_RGB = 255,ALPHA_INCR_RATE = 0.1,MAX_ALPHA = 1.0;
+    a = 0.1; r = g = b = 255;
+    if (event.target.id === "canvas"){
+        const MAX_RGB = 255,ALPHA_INCR_RATE = 0.1,MAX_ALPHA = 1.0;
+        a = 0.1;
+        r = Math.floor(Math.random()*MAX_RGB+1);
+        g = Math.floor(Math.random()*MAX_RGB+1);
+        b = Math.floor(Math.random()*MAX_RGB+1);
+    }
+    else if (event.target.className === "grid"){
+        bg = event.target.style.backgroundColor;
+        bg = bg.substring(bg.indexOf("(")-1,bg.indexOf(")"));
+        bg = bg.split(",");
+        gridR = bg[0]; gridG = bg[1]; gridB = bg[2]; gridA = bg[3];
+        if (r == gridR && g == gridG && b == gridB){
+            if (gridA != MAX_ALPHA){
+                gridA = parseFloat(gridA);
+                gridA += ALPHA_INCR_RATE;
+                event.target.style.backgroundColor = `rgba(${r},${g},${b},${gridA})`;
+            }
+        }
+        else{
+            event.target.style.backgroundColor = `rgba(${r},${g},${b},${a})`;
+        }
+    }
+}
