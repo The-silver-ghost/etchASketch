@@ -3,6 +3,7 @@ count = MIN_COUNT;
 
 //functions
 function inputPrompt(event){
+    gridCountLabel = document.getElementById("grid-count-label");
     if (event.target.id === "gridCountButton"){
         count = 16;
         count = prompt("Choose the number of squares in the grid [16-100]",16);
@@ -16,17 +17,18 @@ function inputPrompt(event){
             alert("Invalid grid number. Grid count set to 16.");
         }
     }
-    return count;
+    gridCountLabel.textContent = `Grid Count: ${count}`;
+    addGridToCanvas(count);
 }
 
-function addGridToCanvas(event,count){
+function addGridToCanvas(count){
     canvas = document.getElementById("canvas");
     canvas.replaceChildren();
-    gridSquare = document.createElement("div");
-    gridSquare.className = "grid";
-    gridSquare.style.backgroundColor = "rgba(255,255,255,1)";
     for (i = 0; i < count; i ++){
         for(j = 0; j < count; j++){
+            gridSquare = document.createElement("div");
+            gridSquare.className = "grid";
+            gridSquare.style.backgroundColor = "rgba(255,255,255,1.0)";
             canvas.appendChild(gridSquare);
         }
     }
@@ -59,3 +61,6 @@ function colorCanvas(event){
         }
     }
 }
+
+//main
+addEventListener("click",(e)=>{inputPrompt(e);});
