@@ -23,8 +23,8 @@ label{
 
 #canvas{
     background-color: rgba(255,255,255,1.0);
-    height: 750px;
-    width: 750px;
+    height: 75vh;
+    width: 75vh;
     border: 10px solid black;
 }
 
