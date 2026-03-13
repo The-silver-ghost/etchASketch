@@ -1,21 +1,18 @@
 const MIN_COUNT = 16, MAX_COUNT = 100;
-count = MIN_COUNT;
+count = MIN_COUNT;r = g = b = 255;
 
 //functions
-function inputPrompt(event){
-    
-    if (event.target.id === "gridCountButton"){
+function inputPrompt(){
+    count = 16;
+    count = prompt("Choose the number of squares in the grid [16-100]",16);
+    count = parseInt(count);
+    if (isNaN(count)){
         count = 16;
-        count = prompt("Choose the number of squares in the grid [16-100]",16);
-        count = parseInt(count);
-        if (isNaN(count)){
-            count = 16;
-            alert("Invalid input. Grid count set to 16.");
-        }
-        else if (count < MIN_COUNT || count > MAX_COUNT){
-            count = 16;
-            alert("Invalid grid number. Grid count set to 16.");
-        }
+        alert("Invalid input. Grid count set to 16.");
+    }
+    else if (count < MIN_COUNT || count > MAX_COUNT){
+        count = 16;
+        alert("Invalid grid number. Grid count set to 16.");
     }
     addGridToCanvas(count);
 }
@@ -26,7 +23,6 @@ function addGridToCanvas(count){
     canvasHeight = canvas.clientHeight;
     canvasHeight = parseFloat(canvasHeight);
     gridWidth = (canvasHeight/count)/canvasHeight*100;
-    console.log(gridWidth);
     canvas.replaceChildren();
     for (i = 0; i < count; i ++){
         for(j = 0; j < count; j++){
@@ -40,17 +36,16 @@ function addGridToCanvas(count){
     gridCountLabel.textContent = `Grid Count: ${count}`;
 }
 
-function colorCanvas(event){
-    const MAX_RGB = 255,ALPHA_INCR_RATE = 0.1,MAX_ALPHA = 1.0;
-    a = 0.1;r=g=b=0;
-    if (event.target.id === "canvas"){
-        const MAX_RGB = 255,ALPHA_INCR_RATE = 0.1,MAX_ALPHA = 1.0;
-        a = 0.1;
-        r = Math.floor(Math.random()*MAX_RGB+1);
-        g = Math.floor(Math.random()*MAX_RGB+1);
-        b = Math.floor(Math.random()*MAX_RGB+1);
-    }
-    else if (event.target.className === "grid"){
+function getRandomColor(){
+    const MAX_RGB = 255;
+    r = Math.floor(Math.random()*MAX_RGB+1);
+    g = Math.floor(Math.random()*MAX_RGB+1);
+    b = Math.floor(Math.random()*MAX_RGB+1);
+}
+
+function colorCanvas(event,r,g,b){
+    ALPHA_INCR_RATE = 0.1;MAX_ALPHA = 1.0;a = 0.1;
+    if (event.target.className === "grid"){
         bg = event.target.style.backgroundColor;
         bg = bg.substring(bg.indexOf("(")+1,bg.indexOf(")"));
         bg = bg.split(",");
@@ -69,7 +64,10 @@ function colorCanvas(event){
 }
 
 //main
+gridCountButton = document.getElementById("gridCountButton");
+canvas = document.getElementById("canvas");
+
 addGridToCanvas(count);
-addEventListener("click",(e)=>{inputPrompt(e);});
-addEventListener("mouseover",(e)=>{colorCanvas(e);});
-console.log(document.getElementById("canvas"))
+gridCountButton.addEventListener("click",inputPrompt);
+canvas.addEventListener("mouseenter",getRandomColor);
+addEventListener("mouseover",(e)=>{colorCanvas(e,r,g,b);});
