@@ -23,10 +23,11 @@ label{
     width: 75vh;
     border: 10px solid black;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .grid{
-    flex-grow: 1;
+    flex: 1;
 }
 
 #main-container{
