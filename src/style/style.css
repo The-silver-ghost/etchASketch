@@ -10,10 +10,6 @@ button{
 
 label{
     background-color: antiquewhite;
-    /* height: 36px; */
-    /* padding-left: 5px; */
-    /* padding-right: 5px; */
-    /* text-align: center; */
     padding-top: 9px;
     padding-bottom: 8px;
     padding-left: 20px;
@@ -23,9 +19,15 @@ label{
 
 #canvas{
     background-color: rgba(255,255,255,1.0);
-    height: 750px;
-    width: 750px;
+    height: 75vh;
+    width: 75vh;
     border: 10px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid{
+    flex: 1;
 }
 
 #main-container{
